@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:4200'],
+    'allowed_origins' => ['http://localhost:4200', "https://1ee134d4.transitport-tfg-front.pages.dev"],
 
     'allowed_origins_patterns' => [],
 

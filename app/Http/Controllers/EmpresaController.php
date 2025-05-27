@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 use App\Models\Cliente;
 use App\Models\Empresa;
 
 class EmpresaController extends Controller {
+    /**
+     * Funcion que recoge las empresas pero convirtiendo la lista a un array donde la "key" es el id de la empresa.
+     */
     public function getEmpresas() {
         $empresas = Empresa::all() -> keyBy('id');
 
@@ -19,19 +23,34 @@ class EmpresaController extends Controller {
         $empresas = Empresa::all();
         return $empresas;
     }
+    /**
+     * Funcion que recoge las diferentes ciudades que hay asociadas a las empresas.
+     */
     public function getCiudades() {
         $empresas = Empresa::distinct() -> pluck('ciudad');
         return $empresas;
     }
 
     public function store(Request $request) {
-        $empresa = $request -> validate([
+        // Validamos los datos.
+        $validator = Validator::make($request -> all(), [
             'nombre' => 'string',
             'ciudad' => 'string',
             'cif' => 'regex:/^[0-9]{8}[A-Za-z]$/',
             'email' => 'string',
             'codigo_postal' => 'regex:/^\d{5}$/',
         ]);
+
+        // Si falla devolvemos un error personalizado.
+        if ($validator -> fails()) {
+            return redirect() -> back()
+                -> withErrors($validator)
+                -> withErrors(['form' => "Introduzca datos validos en el formulario."])
+                -> withInput();
+        }
+
+        //Por ultimo, si no falla agregamos el id del gestor para guardar los datos.
+        $empresa = $validator -> validated();
 
         $empresa['id_gestor'] = Auth::user() -> id;
 

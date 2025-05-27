@@ -12,6 +12,9 @@ class BuqueController extends Controller {
         $task = Buque::with('empresas') -> get();
         return $task;
     }
+    /**
+     * Funcion que recoge los transportes filtrados por la empresa a la que pertenece el cliente que va a verlos.
+     */
     public function getBuquesCliente($id) {
         $cliente = Cliente::findOrFail($id);
         $task = Buque::where('id_empresa', $cliente -> id_empresa)

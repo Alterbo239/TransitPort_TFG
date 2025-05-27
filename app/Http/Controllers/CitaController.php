@@ -13,6 +13,9 @@ class CitaController extends Controller {
         $task = Citas::with(['buques', 'zonas']) -> get();
         return $task;
     }
+    /**
+     * Funcion que recoge las citas filtradas por cada cliente.
+     */
     public function getCitasCliente($id) {
         $cliente = Cliente::findOrFail($id);
         $task = Citas::where('id_cliente', $cliente -> id)
@@ -105,6 +108,10 @@ class CitaController extends Controller {
         //Esta función obtendra el id de la tarea que hayamos seleccionado y la borrará de nuestra BD
     }
 
+    /**
+     * Funcion que recoge los vehiculos de la empresa a la que pertenece el cliente.
+     * (Igual que con la Api de Transportes por cliente, solo que esta es para devolver a la vista).
+     */
     public function getBuques(Request $request) {
         $user = Auth::user();
         $cliente = Cliente::findOrFail( $user -> id );
@@ -115,10 +122,13 @@ class CitaController extends Controller {
         return view('Client.pedirCitasView', ['buques' => $task]);
     }
 
+    /**
+     * Funcion que guarda los datos de la pedida de la cita. (Los datos que se le permiten mandar al cliente).
+     */
     public function storePedida(Request $request) {
         $cita = $request->validate([
             'tipo' => 'string',
-            'fecha' => 'date_format:Y-m-d',
+            'fecha' => 'date_format:Y-m-d|after:today',
             'buque' => 'int',
         ]);
 

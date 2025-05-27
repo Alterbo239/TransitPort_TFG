@@ -35,6 +35,10 @@
                         <p>Seleccionar fecha</p>
                         <input class="date" type="date" name="fecha" id="fecha" readonly><img src="assets/Administrativo/calendario.svg" id="icono">
                     </div>
+
+                    @error('fecha')
+                        <div class="error"> La fecha seleccionada debe ser una fecha futura. </div>
+                    @enderror
                 </div>
 
                 <div class="div div2">
@@ -83,6 +87,9 @@
         document.getElementById('cancel').addEventListener('click', cancelCalendar);
     }
 
+    /**
+     * Funcion para mostrar u ocultar el calendario.
+     */
     function mostrarCalendario() {
         let calendario = document.getElementById('fondo');
 
@@ -93,9 +100,15 @@
         }
     }
 
+    /**
+     * Funcion que confirma el valor del calendario y vuelve invisible el calendario.
+     */
     function confirmCalendar() {
         document.getElementById('fondo').style.visibility = 'hidden';
     }
+    /**
+     * Funcion que cancela la operacion del calendario, volviendo nulo el valor.
+     */
     function cancelCalendar() {
         document.getElementById('fecha').value = null;
 
@@ -110,8 +123,8 @@
             }
         });
 
-        document.getElementById('confirm').disabled = true;
-        document.getElementById('fondo').style.visibility = 'hidden';
+        document.getElementById('confirm').disabled = true; // Desabilitamos el boton de confirmar.
+        confirmCalendar();
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -215,6 +228,11 @@
         position: relative;
         right: 13%;
         bottom: -38px;
+    }
+
+    .error {
+        font-size: 0.9rem;
+        color: #f00;
     }
 
     .titulo {

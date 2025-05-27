@@ -58,14 +58,14 @@
     </html>
 
     <script>
+        // Convertimos los datos de las empresas a json para usarlo en el js.
         const empresasData = @json($empresas);
-        console.log(empresasData);
 
+        // Agregamos un evento para que, cada vez que la empresa cambie en su select, tambien lo haga la ciudad.
         document.getElementById('empresa').addEventListener('change', function() {
             const empresaID = this.value;
-            let city = empresasData[empresaID] ? empresasData[empresaID].ciudad : 'No disponible.';
-            console.log(city);
-            document.getElementById('ciudad').value = city;
+            let city = empresasData[empresaID] ? empresasData[empresaID].ciudad : 'No disponible.'; // Le ponemos el valor encontrado o mostramos mensaje default.
+            document.getElementById('ciudad').value = city; // Agregamos el valor al select.
         })
     </script>
 

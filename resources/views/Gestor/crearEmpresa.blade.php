@@ -105,6 +105,16 @@
                     margin-right:70px;
                 }
 
+                .error {
+                    color: #f00;
+
+                    position: absolute;
+                    left: 10%;
+                    bottom: 38%;
+
+                    font-size: 1.2rem;
+                }
+
                 .crear {
                     color: var(--Cinder-50, #F1F5FE);
                     font-size: 32px;
@@ -175,10 +185,14 @@
 
                 </div>
 
+                @error('form')
+                    <div class="error"> {{ $message }} </div>
+                @enderror
+
                 <button class="crear btn btn-primary">Crear</button>
             </form>
 
-                <a href="{{ url()->previous() }}" class="cancelar btn btn-warning">Cancelar</a>
+            <a href="{{ url()->previous() }}" class="cancelar btn btn-warning">Cancelar</a>
 
         </body>
     </html>

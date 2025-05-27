@@ -10,6 +10,7 @@ class ZonaController extends Controller {
         $zonas = Zona::all();
         return response()->json($zonas);
     }
+    // Funcion para recoger las zonas de la BD.
     public function getZonas() {
         $zonas = Zona::all();
         return view('Administrativo.gestionarCitas', compact('zonas'));

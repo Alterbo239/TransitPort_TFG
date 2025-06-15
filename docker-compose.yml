@@ -91,7 +91,7 @@ services:
                 - wget
                 - '--no-verbose'
                 - '--spider'
-                - 'http://127.0.0.1:7700/health'
+                - 'http://127.0.0.1:8000:7700/health'
             retries: 3
             timeout: 5s
     mailpit:

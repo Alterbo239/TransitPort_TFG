@@ -24,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'operador' => OperadorMiddleware::class,
             'cliente' => ClienteMiddleware::class,
         ]);
-        $middleware->append(HandleCors::class);
+        $middleware->prepend(HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

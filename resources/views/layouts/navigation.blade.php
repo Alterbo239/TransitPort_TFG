@@ -229,9 +229,9 @@
                         </x-nav-link>
                     </div>
                     <div class="hidden link ">
-                        <x-nav-link :href="route('crearEmpresa')" :active="request()->routeIs('crearEmpresa')">
+                        <x-nav-link :href="route('verEmpresa')" :active="request()->routeIs('verEmpresa')">
                             <img class="menu_image" src="assets/Gestor/CrearEmpresa.svg">
-                            <span>Crear Empresa</span>
+                            <span>Ver Empresa</span>
                         </x-nav-link>
                     </div>
                 @endif

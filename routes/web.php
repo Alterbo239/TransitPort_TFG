@@ -50,6 +50,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/crearUsuario', [GestorController::class, 'crearUsuario'])->name('crearUsuario');
         Route::post('/guardarUsuario', [GestorController::class, 'guardarUsuario'])->name('guardarUsuario');
 
+        Route::view('/verEmpresa', 'Gestor.verEmpresa')->name('verEmpresa');
+        Route::get('/verEmpresas', [EmpresaController::class, 'visualizarEmpresas'])->name('verEmpresas');
+        Route::post('/actualizarEmpresa', [EmpresaController::class, 'update'])->name('actualizarEmpresa');
+        Route::get('/getCiudades', [EmpresaController::class, 'getCiudades'])->name('getCiudades');
+
         Route::view('/crearEmpresa', 'Gestor.crearEmpresa')->name('crearEmpresa');
         Route::post('/guardarEmpresa', [EmpresaController::class, 'store'])->name('guardarEmpresa');
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\Cliente;
 use App\Models\Empresa;
@@ -23,6 +25,17 @@ class EmpresaController extends Controller {
         $empresas = Empresa::all();
         return $empresas;
     }
+
+    /**
+     * Funcion para mostrar las empresas con Datatables.
+     */
+    public function visualizarEmpresas() {
+        $empresas = Empresa::select(['nombre', 'ciudad', 'cif', 'email', 'codigo_postal', 'id']);
+
+        return DataTables::of($empresas)
+            -> make(true);
+    }
+
     /**
      * Funcion que recoge las diferentes ciudades que hay asociadas a las empresas.
      */
@@ -66,7 +79,8 @@ class EmpresaController extends Controller {
 
         return redirect() -> route('exito') -> with([
             'cabecera' => "Crear empresa",
-            'mensaje' => "Empresa creada con éxito!"
+            'mensaje' => "Empresa creada con éxito!",
+            'origen' => 'crearEmpresa'
         ]);
     }
 
@@ -83,18 +97,22 @@ class EmpresaController extends Controller {
             'codigo_postal' => 'string',
             'cif' => 'string',
             'email' => 'string',
-            'id_gestor' => 'int',
         ]);
 
         try {
+            $validatedData['id_gestor'] = Auth::user()->id;
+
             $task = Empresa::findOrFail($validatedData["id"]);
+
+            Log::info('Actualizando empresa con ID: ' . $task->id);
+            Log::info('Datos validados: ' . json_encode($validatedData));
 
             // Usar fill() en lugar de update() para mayor control
             $task->fill($validatedData);
 
-        if ($task->isDirty()) { // Verifica si hay cambios antes de guardar
-            $task->save();
-        }
+            if ($task->isDirty()) { // Verifica si hay cambios antes de guardar
+                $task->save();
+            }
 
             return response()->json([
                 'message' => 'Cita actualizada con éxito en la base de datos.',

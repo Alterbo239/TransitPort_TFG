@@ -43,7 +43,11 @@
                         confirmButtonText: 'Aceptar',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.history.back();
+                            @if (session('origen') === 'crearEmpresa')
+                                window.location.href = "{{ route('verEmpresa') }}";
+                            @else
+                                window.history.back();
+                            @endif
                         }
                     });
                 });

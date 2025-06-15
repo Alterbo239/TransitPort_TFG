@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Gestor;
 use App\Models\Empresa;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\Log;
 
 class GestorController extends Controller {
 
@@ -126,11 +127,51 @@ class GestorController extends Controller {
 
     }
 
+    //almacena los datos del formulario en crear usuario
+    public function storeUsuario(Request $request){
+        $user = $request -> validate([
+            'name' => 'string',
+            'usuario' => 'string',
+            'email' => 'email',
+            'telefono' => 'string',
+            'ciudad' => 'string',
+            'codigoPostal' => 'string',
+            'password' => 'string',
+            'cargo' => 'string|in:gestor,administrativo,operador,cliente',
+        ]);
 
+        $cliente = $request -> validate([
+            'id_gestor' => 'integer',
+            'empresa' => 'string',
+            'autonomo' => 'nullable|boolean',
+        ]);
 
+        try {
+            $user['password'] = bcrypt($user['password']);
+            $userModel = User::create($user);
 
+            if ($user['cargo'] === 'cliente') {
+                $autonomo = $cliente['autonomo'] ?? 0;
 
-
+                Cliente::create([
+                    'id' => $userModel -> id,
+                    'nombre' => $userModel -> name,
+                    'usuario' => $userModel -> usuario,
+                    'password' => $userModel -> password,
+                    'cargo' => $userModel -> cargo,
+                    'autonomo' => $autonomo,
+                    'id_empresa' => $cliente['empresa'],
+                    'id_gestor' => $cliente['id_gestor'],
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                Log::error('Error en storeUsuario: ' . $e->getMessage()),
+                'message' => 'Error al crear el usuario.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     }
 
 

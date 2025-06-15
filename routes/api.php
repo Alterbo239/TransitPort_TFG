@@ -38,6 +38,8 @@ Route::get('/gestor/buscar/{id}', [GestorController::class, 'show']);
 
 Route::put('/modificar-estado/{id}', [UsuarioController::class, 'modificarEstado']);
 
+Route::post('/storeUsuario', [GestorController::class, 'storeUsuario']);
+
 
 //Administrativo
 Route::get('/administrativo', [AdministrativoController::class, 'index']);
@@ -128,4 +130,3 @@ Route::get('/empresas', [EmpresaController::class, 'index']);
 Route::get('/empresas/show/{id}', [EmpresaController::class, 'show']);
 Route::put('/empresas/update/{id}', [EmpresaController::class, 'update']);
 Route::get('/ciudades', [EmpresaController::class, 'getCiudades']);
-

@@ -192,7 +192,7 @@
                 <button class="crear btn btn-primary">Crear</button>
             </form>
 
-            <a href="{{ url()->previous() }}" class="cancelar btn btn-warning">Cancelar</a>
+            <a href="{{ route('verEmpresa') }}" class="cancelar btn btn-warning">Cancelar</a>
 
         </body>
     </html>

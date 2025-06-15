@@ -18,7 +18,7 @@ class EmpresaController extends Controller {
     public function getEmpresas() {
         $empresas = Empresa::all() -> keyBy('id');
 
-        return view('Administrativo.crearTransporte', ['empresas' => $empresas]);
+        return view('Administrativo.Transportes.crearTransporte', ['empresas' => $empresas]);
     }
 
     public function index() {

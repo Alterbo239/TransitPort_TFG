@@ -191,9 +191,9 @@
                         </x-nav-link>
                     </div>
                     <div class="hidden link sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('registrarTransporte')" :active="request()->routeIs('registrarTransporte')">
+                        <x-nav-link :href="route('verTransporte')" :active="request()->routeIs('verTransporte')">
                             <img class="menu_image" src="assets/Client/RegistrarVehiculo.svg">
-                            <span>Registrar Vehiculo</span>
+                            <span>Visualizar Vehiculo</span>
                         </x-nav-link>
                     </div>
                 @endif

@@ -1,9 +1,11 @@
-#empresas th {
+#empresas th,
+#transportes th {
     background: var(--Cinder-900, #152D65);
     color: white;
 }
 
-#empresas tbody tr {
+#empresas tbody tr,
+#transportes tbody tr {
     cursor: pointer;
 }
 
@@ -186,7 +188,8 @@
 
 }
 
-.misCosas > .swal2-select{
+.misCosas > .swal2-select,
+select.infoInput {
 
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -201,7 +204,15 @@
     justify-content: flex-end;
     align-items: center;
     flex-shrink: 0;
+}
 
+input.infoInput {
+  width: 227px;
+  height: 49px;
+  padding-left: 2%;
+  background: var(--Cinder-50, #F1F5FE);
+  border: none;
+  color: black;
 }
 
 .mi-titulo2 {
@@ -485,6 +496,9 @@ h2#swal2-title.swal2-title{
   z-index: 1;
   font-size: 20px;
   font-weight: 700;
+}
+.botonCrearTransporte {
+  width: 200px;
 }
 
 .botonCrear:hover {

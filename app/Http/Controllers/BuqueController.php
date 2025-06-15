@@ -6,11 +6,37 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Buque;
 use App\Models\Cliente;
+use App\Models\Empresa;
+
+use Illuminate\Support\Facades\Log;
+
+use Yajra\DataTables\Facades\DataTables;
 
 class BuqueController extends Controller {
     public function index() {
         $task = Buque::with('empresas') -> get();
         return $task;
+    }    
+    
+    public function visualizarTransportes() {
+        $transportes = Buque::with('empresas')
+            -> select(['nombre', 'tipo', 'id_empresa', 'estado', 'id']);
+
+        return DataTables::of($transportes)
+            ->addColumn('empresa', function ($row) {
+                return $row->empresas->nombre ?? 'No asignada';
+            })
+            ->filterColumn('empresa', function($query, $keyword) {
+                $query->whereHas('empresas', function ($q) use ($keyword) {
+                    $q->where('nombre', 'like', "%{$keyword}%");
+                });
+            })
+            ->make(true);
+    }
+
+    public function getEmpresas() {
+        $empresas = Empresa::select('id', 'nombre') -> get();
+        return view('Administrativo.Transportes.verTransportes', compact('empresas'));
     }
     /**
      * Funcion que recoge los transportes filtrados por la empresa a la que pertenece el cliente que va a verlos.
@@ -70,6 +96,8 @@ class BuqueController extends Controller {
     }
 
     public function update(Request $request) {
+        \Log::debug('Datos recibidos en update(): ', $request->all());
+
         $validatedData = $request->validate([
             'id' => 'int',
             'nombre' => 'string',

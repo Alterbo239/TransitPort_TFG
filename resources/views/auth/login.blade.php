@@ -2,13 +2,13 @@
     <div id="bloqueInicio" class="d-flex align-items-center justify-content-center vh-100" >
         <div class="d-flex">
 
-            <form action="{{ route('loginCliente') }}" method="get">
+            <!-- <form action="{{ route('loginCliente') }}" method="get">
                 <button type="submit"
                         class="px-10 py-3 mt-6 text-lg font-bold text-white transition bg-gray-900 rounded-lg shadow-md botonLogin hover:bg-gray-800"
                         style="margin-right: 40px">
                     Entrar como Cliente
                 </button>
-            </form>
+            </form> -->
 
             <div id="bloqueLogin" class="p-4 d-flex flex-column align-items-center justify-content-center">
                 <div id="contenidoLogin">

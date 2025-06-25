@@ -119,6 +119,7 @@ Route::get('/citas/show/{id}', [CitaController::class, 'show']);
 
 Route::get('/citas/{id}', [CitaController::class, 'getCitasCliente']);
 
+Route::post('/citas/store', [CitaController::class, 'store']);
 Route::put('/citas/update/{id}', [CitaController::class, 'update']);
 
 //Transportes
